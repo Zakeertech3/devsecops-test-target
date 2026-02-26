@@ -1,0 +1,6 @@
+pandas
+python-dotenv
+elasticsearch
+sentence-transformers
+datasets
+pyarrow
