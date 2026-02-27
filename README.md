@@ -1,6 +1,6 @@
 # Elastic MCP PR Reviewer
 
-An autonomous GitHub agent that uses Elastic vector search and the GitHub Model Context Protocol (MCP) to semantically match new Pull Requests against historical vulnerabilities, injecting secure code fixes directly into the PR.
+An autonomous agent powered by the Elastic Agent Builder. It uses Elastic vector search and the Model Context Protocol (MCP) to semantically match new Pull Requests against historical vulnerabilities, autonomously injecting secure code fixes directly into GitHub.
 
 ---
 
@@ -8,7 +8,9 @@ An autonomous GitHub agent that uses Elastic vector search and the GitHub Model 
 Software engineering teams suffer from an "institutional memory" problem. Despite having thousands of past Pull Requests where senior engineers have already identified, debated, and fixed complex security flaws, that data is trapped in closed PRs. Traditional security scanners (SAST) rely on rigid regex rules and completely miss context-dependent logic flaws. As a result, developers repeat the exact same mistakes, and senior reviewers waste hours catching identical vulnerabilities.
 
 ## The Solution
-We built an Agentic DevSecOps Auditor that turns dead PR history into an active security guard. By building an ETL pipeline to vectorize 5,000 historical PRs, we gave the AI a company-specific memory. It leverages an Elastic Cloud vector database to understand the *logic* of the code (bypassing regex limitations) and utilizes the **Model Context Protocol (MCP)** to autonomously read live GitHub code and write secure fixes directly to the developer's PR without human intervention.
+I built an Agentic DevSecOps Auditor that turns dead PR history into an active security guard. By engineering an ETL pipeline to vectorize 5,000 historical PRs, I gave the AI a company-specific memory hosted entirely on Elastic Cloud.
+
+Using the Elastic Agent Builder as the core orchestration engine (acting as the MCP Client), the agent leverages an Elasticsearch vector database to understand the logic of the code, completely bypassing traditional regex limitations. The Elastic Agent then utilizes the Model Context Protocol (MCP) to securely tunnel into GitHub, autonomously reading live code diffs and writing secure fixes directly to the developer's PR without any human intervention.
 
 ---
 
@@ -36,7 +38,7 @@ We built an Agentic DevSecOps Auditor that turns dead PR history into an active 
 +-----------------------+               +------------------------+                |-----------------------|
 |   Target GitHub Repo  |               |    Local MCP Server    |                | Agent:                |
 |-----------------------|               |------------------------|                | DevSecOps Auditor     |
-| Zakeertech3/          |  Read/Write   | Node.js Environment    |  HTTP Stream   |                       |
+| Zakeertech3/          |  Read/Write   | Node.js Environment    |  HTTPS Stream  |                       |
 | devsecops-test-target | <============ | Auth: GitHub PAT       | <=============>| MCP Tools Bridged:    |
 |                       |  (GitHub API) |                        |  (Pinggy.io +  | - get_pull_request    |
 | - Live PR Code Diffs  |               | Exposes Actions:       |  Supergateway) | - get_file_contents   |
