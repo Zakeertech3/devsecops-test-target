@@ -66,6 +66,60 @@ We extracted 5,000 real-world Pull Requests and used Python to encode the code d
 ![Elastic Index Management - Discover](etl-2.png)
 *Figure 2: Discovering and querying the raw vector data in the `pr-code-reviews` index.*
 
+### 2. Semantic Search Tool Creation
+To bridge the vector database with the LLM, we created a custom tool in Elastic. Instead of basic keyword matching, the tool calculates the mathematical similarity between the live PR and historical data to find exact logic matches.
+
+![Codebase Search Tool - Config](index-tool-1.png)
+*Figure 3: Configuring the `codebase.search_historical_prs` tool in Elastic.*
+
+![Codebase Search Tool - kNN Setup](index-tool-2.png)
+*Figure 4: Setting up the kNN search logic against the `title_vector` field.*
+
+### 3. Model Context Protocol (MCP) Integration
+To give the agent "hands," we deployed a local GitHub MCP server orchestrated via Supergateway and exposed it via a Pinggy HTTP tunnel. We then bound the required GitHub tools to Elastic.
+
+![MCP Tool 1 - Get Pull Request](mcp-1.png)
+*Figure 5: The `get_pull_request` tool configuration.*
+
+![MCP Tool 2 - Get File Contents](mcp-2.png)
+*Figure 6: The `get_file_contents` tool configuration for reading raw code.*
+
+![MCP Tool 3 - Add Issue Comment](mcp-3.png)
+*Figure 7: The `add_issue_comment` tool enabling autonomous write access to GitHub.*
+
+### 4. DevSecOps Agent Assembly
+We assembled the tools under a strict DevSecOps persona inside the Elastic Agent Builder, assigning it the memory (Index Search) and the capabilities (MCP Tools) to execute the workflow.
+
+![Agent Assembly - Overview](agent-1.png)
+*Figure 8: Agent system prompt and persona definition.*
+
+![Agent Assembly - Tool Assignment](agent-2.png)
+*Figure 9: Binding the 4 custom tools to the active agent.*
+
+### 5. Triggering the Autonomous Audit
+When a new Pull Request is raised, we prompt the agent via the chat interface to initiate the audit pipeline. The agent autonomously reads the PR, extracts the code, and searches the vector database.
+
+![Chatbot Trigger - Request](chat-1.png)
+*Figure 10: Initiating the audit command for a specific PR.*
+
+![Chatbot Trigger - Tool Execution](chat-2.png)
+*Figure 11: The agent autonomously triggering `get_file_contents`.*
+
+![Chatbot Trigger - Semantic Match](chat-3.png)
+*Figure 12: The agent successfully finding a matching historical vulnerability in the Elastic index.*
+
+### 6. The Result: Autonomous PR Fixing
+Once the vulnerability is identified, the agent uses the GitHub MCP to post the secure code fix directly to the developer's live Pull Request.
+
+![Live PR - The Vulnerability](pr-1.png)
+*Figure 13: The vulnerable code pushed by the developer.*
+
+![Live PR - Agent Comment](pr-2.png)
+*Figure 14: The autonomous warning comment injected by the Elastic Agent.*
+
+![Live PR - Secure Fix](pr-3.png)
+*Figure 15: The agent providing the historically accurate, secure code snippet.*
+
 ## Tech Stack
 * **Cloud & Search:** Elastic Cloud, Elasticsearch Vector Database, Elastic Agent Builder
 * **Data Engineering:** Python, Pandas, PyArrow, Parquet
