@@ -50,10 +50,6 @@ We built an Agentic DevSecOps Auditor that turns dead PR history into an active 
                                                                                   |    Developer (You)    |
                                                                                   +-----------------------+
 
-
-
-
----
 ```
 
 ## Tech Stack
