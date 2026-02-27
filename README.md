@@ -35,6 +35,7 @@ We built an Agentic DevSecOps Auditor that turns dead PR history into an active 
 +-------------------+   Write  +------------------------+          +-------------------------+
                                                                    | Tool: codebase.search   |
                                                                    +-------------------------+
+
 ---
 
 ## Step-by-Step Implementation
