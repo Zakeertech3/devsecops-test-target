@@ -14,68 +14,27 @@ We built an Agentic DevSecOps Auditor that turns dead PR history into an active 
 
 ## Architecture Flow
 
-        +--------------------------------+
-        |        Data Sources            |
-        |--------------------------------|
-        | Hugging Face 'hao-li/AIDev'    |
-        | (5,000 Historical PR Records)  |
-        +--------------------------------+
-                  |
-                  v
-        +--------------------------------+
-        |      Local Python ETL          |
-        |--------------------------------|
-        | - Pandas (Extract/Transform)   |
-        | - SentenceTransformers         |
-        |   ('all-MiniLM-L6-v2')         |
-        | - Parquet Conversion           |
-        +--------------------------------+
-                  |  Bulk Load
-                  v
-        +--------------------------------+
-        |      Elastic Cloud             |
-        |--------------------------------|
-        | Index: 'pr-code-reviews'       |
-        | (384-Dimensional Vectors)      |
-        +--------------------------------+
-                  ^
-                  |  kNN Semantic Search
-                  v
-        +--------------------------------+
-        |   Elastic Agent Builder        |
-        |--------------------------------|
-        | Tool: codebase.search_prs      |
-        | Persona: DevSecOps Auditor     |
-        +--------------------------------+
-                  ^
-                  |  HTTP Requests
-                  v
-        +--------------------------------+
-        |   Secure Network Bridge        |
-        |--------------------------------|
-        | - Pinggy.io (Public URL)       |
-        | - Supergateway (Stream HTTP)   |
-        +--------------------------------+
-                  ^
-                  |  Local port 6277
-                  v
-        +--------------------------------+
-        |   Local Node.js Terminal       |
-        |--------------------------------|
-        | GitHub MCP Server              |
-        | Auth: Fine-Grained PAT         |
-        +--------------------------------+
-                  ^
-                  |  get_file_contents
-                  |  add_issue_comment
-                  v
-        +--------------------------------+
-        |        GitHub Repo             |
-        |--------------------------------|
-        | Live PR Code Diffs             |
-        | Auto-Generated Code Fixes      |
-        +--------------------------------+
+============================== PHASE 1: DATA INGESTION (ETL) ==============================
 
++-------------------+          +------------------------+          +-------------------------+
+|   Data Sources    | Extract  |   Local Python ETL     |   Load   |      Elastic Cloud      |
+|-------------------|=========>|------------------------|=========>|-------------------------|
+| Hugging Face      |          | - Pandas / Parquet     |  (Bulk)  | Index: pr-code-reviews  |
+| 'hao-li/AIDev'    |          | - SentenceTransformers |          | (384D Vector Database)  |
++-------------------+          +------------------------+          +-------------------------+
+                                                                                ^
+                                                                                |
+============================ PHASE 2: AUTONOMOUS AGENT LOOP ====================|==========
+                                                                                |
++-------------------+          +------------------------+          +-------------------------+
+|    GitHub Repo    |          |    Local Network       |          |  Elastic Agent Builder  |
+|-------------------|   Read   |------------------------|  Secure  |-------------------------|
+| Live PR Diffs     |=========>| Node.js Terminal       |=========>| Persona: Auditor        |
+|                   |          | (GitHub MCP Server)    |  Tunnel  | - Pinggy.io             |
+| Auto Code Fixes   |<=========| Auth: Fine-Grained PAT |<=========| - Supergateway          |
++-------------------+   Write  +------------------------+          +-------------------------+
+                                                                   | Tool: codebase.search   |
+                                                                   +-------------------------+
 ---
 
 ## Step-by-Step Implementation
@@ -83,7 +42,7 @@ We built an Agentic DevSecOps Auditor that turns dead PR history into an active 
 ### 1. Data Engineering & Vector Indexing (ETL)
 We extracted 5,000 real-world Pull Requests and used Python to encode the code diffs into 384-dimensional dense vectors. This enriched data was bulk-loaded into Elasticsearch.
 
-![Elastic Index Management - Overview]<img width="1919" height="971" alt="Image" src="https://github.com/user-attachments/assets/c44a85a6-617b-4e9e-952d-c5c9844418f0" />
+![Elastic Index Management - Overview](path/to/etl_image_1.png)
 *Figure 1: Verifying the bulk upload of 5,000 vectorized records in Elastic Data Management.*
 
 ![Elastic Index Management - Discover](path/to/etl_image_2.png)
