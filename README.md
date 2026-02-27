@@ -12,15 +12,7 @@ I built an Agentic DevSecOps Auditor that turns dead PR history into an active s
 
 Using the Elastic Agent Builder as the core orchestration engine (acting as the MCP Client), the agent leverages an Elasticsearch vector database to understand the logic of the code, completely bypassing traditional regex limitations. The Elastic Agent then utilizes the Model Context Protocol (MCP) to securely tunnel into GitHub, autonomously reading live code diffs and writing secure fixes directly to the developer's PR without any human intervention.
 
-#### MCP Server Setup Commands (Local Environment)
-
-Before configuring the MCP tools in Elastic, start the local GitHub MCP server and expose it securely.
-
-1️⃣ **Set your GitHub Personal Access Token (PowerShell)**
-
-```powershell
-
-$env:GITHUB_PERSONAL_ACCESS_TOKEN="<YOUR_TOKEN>"
+```
 ---
 
 ## Architecture Flow
