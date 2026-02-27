@@ -53,6 +53,18 @@ Using the Elastic Agent Builder as the core orchestration engine (acting as the 
                                                                                   +-----------------------+
 
 ```
+---
+
+## Step-by-Step Implementation
+
+### 1. Data Engineering & Vector Indexing (ETL)
+We extracted 5,000 real-world Pull Requests and used Python to encode the code diffs into 384-dimensional dense vectors. This enriched data was bulk-loaded into Elasticsearch.
+
+![Elastic Index Management - Overview](etl-1.png)
+*Figure 1: Verifying the bulk upload of 5,000 vectorized records in Elastic Data Management.*
+
+![Elastic Index Management - Discover](etl-2.png)
+*Figure 2: Discovering and querying the raw vector data in the `pr-code-reviews` index.*
 
 ## Tech Stack
 * **Cloud & Search:** Elastic Cloud, Elasticsearch Vector Database, Elastic Agent Builder
