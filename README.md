@@ -1,4 +1,4 @@
-# Elastic MCP PR Reviewer: Agentic DevSecOps Auditor
+# Elastic MCP PR Reviewer
 
 An autonomous GitHub agent that uses Elastic vector search and the GitHub Model Context Protocol (MCP) to semantically match new Pull Requests against historical vulnerabilities, injecting secure code fixes directly into the PR.
 
@@ -49,6 +49,12 @@ We built an Agentic DevSecOps Auditor that turns dead PR history into an active 
                                                                                   +-----------------------+
                                                                                   |    Developer (You)    |
                                                                                   +-----------------------+
+
+
+
+
+---
+```
 
 ## Tech Stack
 * **Cloud & Search:** Elastic Cloud, Elasticsearch Vector Database, Elastic Agent Builder
