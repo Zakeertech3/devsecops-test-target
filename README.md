@@ -14,7 +14,7 @@ Using the Elastic Agent Builder as the core orchestration engine (acting as the 
 
 ---
 
-```text
+```
 
 
 ## Architecture Flow
@@ -54,6 +54,7 @@ Using the Elastic Agent Builder as the core orchestration engine (acting as the 
                                                                                   +-----------------------+
                                                                                   |    Developer (You)    |
                                                                                   +-----------------------+
+
 
 ```
 ---
