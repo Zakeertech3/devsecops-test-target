@@ -83,7 +83,7 @@ We built an Agentic DevSecOps Auditor that turns dead PR history into an active 
 ### 1. Data Engineering & Vector Indexing (ETL)
 We extracted 5,000 real-world Pull Requests and used Python to encode the code diffs into 384-dimensional dense vectors. This enriched data was bulk-loaded into Elasticsearch.
 
-![Elastic Index Management - Overview](<img width="1919" height="971" alt="Image" src="https://github.com/user-attachments/assets/c44a85a6-617b-4e9e-952d-c5c9844418f0" />)
+![Elastic Index Management - Overview]<img width="1919" height="971" alt="Image" src="https://github.com/user-attachments/assets/c44a85a6-617b-4e9e-952d-c5c9844418f0" />
 *Figure 1: Verifying the bulk upload of 5,000 vectorized records in Elastic Data Management.*
 
 ![Elastic Index Management - Discover](path/to/etl_image_2.png)
